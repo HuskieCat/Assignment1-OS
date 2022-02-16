@@ -29,9 +29,13 @@ int main(int argc, char** argv)
       {
         counter++;
       }
-      else if (next == ' ' || next == '\n')
+      else if (next == ' ')
       {
         continue;
+      }
+      else if (next == '\n')
+      {
+        fwrite(&next, 1, 1, stdout);
       }
       else
       {
