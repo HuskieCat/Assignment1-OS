@@ -33,14 +33,15 @@ int main(int argc, char** argv)
       {
         continue;
       }
-      else if (next == '\n')
-      {
-        fwrite(&next, 1, 1, stdout);
-      }
       else
       {
         if(counter != 0)
         {
+          if (next == '\n')
+          {
+            fwrite(&next, 1, 1, stdout);
+          }
+          
           //printf("%d%c", counter, current_character);
           fwrite(&counter, 2, 1, stdout);
           fwrite(&current_character, 1, 1, stdout);
