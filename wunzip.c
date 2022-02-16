@@ -19,22 +19,21 @@ int main(int argc, char** argv)
       return 1;
     }
 
-    while(!feof(fp))
+    int count = 0;
+    while(fread(&count, 2, 1, fp))
     {
-      int counter;
-      fread(&counter, 2, 1, fp);
       char character;
       fread(&character, 1, 1, fp);
 
-      printf("%d\n", counter);
-      for(int i = 0; i < counter; i++)
+      //printf("%d\n", count);
+      for(int i = 0; i < count; i++)
       {
-        printf("%c", character);
+        printf("%c",character);
       }
     }
+    fclose(fp);
   }
 
-  fclose(fp);
 
   return 0;
 }

@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     fp = fopen(argv[i], "r");
     if(fp == NULL)
     {
-      printf("wgrep: cannot open file\n");
+      printf("wzip: cannot open file\n");
       return 1;
     }
 
