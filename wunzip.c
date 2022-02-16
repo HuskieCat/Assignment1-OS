@@ -15,19 +15,18 @@ int main(int argc, char** argv)
     fp = fopen(argv[i], "r");
     if(fp == NULL)
     {
-      printf("wgrep: cannot open file\n");
+      printf("wunzip: cannot open file\n");
       return 1;
     }
 
     while(!feof(fp))
     {
-      
       int counter;
       fread(&counter, 2, 1, fp);
       char character;
-      fread(&character, 2, 1, fp);
+      fread(&character, 1, 1, fp);
 
-      printf("%d", counter);
+      printf("%d\n", counter);
       for(int i = 0; i < counter; i++)
       {
         printf("%c", character);
