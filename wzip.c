@@ -29,13 +29,9 @@ int main(int argc, char** argv)
       {
         counter++;
       }
-      else if (next == ' ')
+      else if (next == ' ' || next == '\n')
       {
         continue;
-      }
-      else if (next == '\n')
-      {
-        printf(&next);
       }
       else
       {
