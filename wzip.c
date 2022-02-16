@@ -39,8 +39,6 @@ int main(int argc, char** argv)
         {
           //printf("%d%c", counter, current_character);
           fwrite(&counter, 2, 1, stdout);
-          //char buffer[2] = {current_character};
-          //fwrite(buffer, 1, 1, stdout);
           fwrite(&current_character, 1, 1, stdout);
         }
         
