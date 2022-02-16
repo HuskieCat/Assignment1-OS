@@ -37,11 +37,11 @@ int main(int argc, char** argv)
       {
         if(counter != 0)
         {
-          if (next == '\n')
+          /*if (next == '\n')
           {
             fwrite(&next, 1, 1, stdout);
-          }
-          
+          }*/
+
           //printf("%d%c", counter, current_character);
           fwrite(&counter, 2, 1, stdout);
           fwrite(&current_character, 1, 1, stdout);
