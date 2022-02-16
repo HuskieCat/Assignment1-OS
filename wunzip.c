@@ -1,8 +1,41 @@
 #include <stdio.h>
+#include <string.h>
 
-int main(void) 
+int main(int argc, char** argv) 
 {
-  printf("Hello World\n");
+  if(argc < 2)
+  {
+    printf("To few arguments\n");
+    return 0;
+  }
+
+  FILE *fp;
+  for(int i = 1; i < argc; i++)
+  {
+    fp = fopen(argv[i], "r");
+    if(fp == NULL)
+    {
+      printf("wgrep: cannot open file\n");
+      return 1;
+    }
+
+    while(!feof(fp))
+    {
+      
+      int counter;
+      fread(&counter, 2, 1, fp);
+      char character;
+      fread(&character, 2, 1, fp);
+
+      printf("%d", counter);
+      for(int i = 0; i < counter; i++)
+      {
+        printf("%c", character);
+      }
+    }
+  }
+
+  fclose(fp);
 
   return 0;
 }
