@@ -1,15 +1,25 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+ * Duplicates the basic functionality of the command 'zip'.
+ * Takes a file (or series of) and zips them into a singular file
+ * Example: aaabb = 3a2b
+ * @Author Bradley Henderson
+*/
+
 int main(int argc, char** argv) 
 {
   if(argc < 2)
   {
-    printf("To few arguments\n");
-    return 0;
+    printf("wzip: file1 [file2 ...]\n");
+    return 1;
   }
 
   FILE *fp;
+  int counter = 0;
+  char previous_character;
+  char current;
   for(int i = 1; i < argc; i++)
   {
     fp = fopen(argv[i], "r");
@@ -19,35 +29,33 @@ int main(int argc, char** argv)
       return 1;
     }
 
-    int counter = 0;
     while(!feof(fp))
     {
-      char current_character;
-      char previous_character;
-      char next = fgetc(fp);
-      if(previous_character == next)
+      current = fgetc(fp);
+      if(previous_character == current)
       {
         counter++;
       }
-      else if (next == ' ')
-      {
-        continue;
-      }
       else
       {
-        if(counter != 0)
+        // To 'Skip over' the end of file (EOF) and keep counting
+        if(counter != 0 && current != EOF)
         {
-          //printf("%d%c", counter, current_character); //Left for future debugging if needed
-          fwrite(&counter, 2, 1, stdout);
-          fwrite(&current_character, 1, 1, stdout);
+          fwrite(&counter, sizeof(int), 1, stdout);
+          fwrite(&previous_character, sizeof(char), 1, stdout);
         }
-        
-        current_character = next;
-        counter = 1;
-        previous_character = current_character;
+
+        if(current != EOF)
+        {
+          counter = 1;
+          previous_character = current;
+        }
       }
     }
   }
+  //Used to zip the last of the character count and character
+  fwrite(&counter, sizeof(int), 1, stdout);
+  fwrite(&previous_character, sizeof(char), 1, stdout);
 
   fclose(fp);
 

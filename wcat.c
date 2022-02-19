@@ -1,10 +1,15 @@
 #include <stdio.h>
 
+/*
+ * Duplicates the basic functionality of the command 'cat'.
+ * Reproduces the plain-text of a file
+ * @Author Bradley Henderson
+*/
+
 int main(int argc, char** argv) 
 {
   if(argc < 2)
   {
-    printf("To few arguments\n");
     return 0;
   }
 
@@ -18,13 +23,12 @@ int main(int argc, char** argv)
       return 1;
     }
 
-    while(!feof(fp))
+    char buffer[1024];
+    while (fgets(buffer, sizeof(buffer), fp) != NULL)
     {
-      char buffer[1024] = {};
-      printf("%s", fgets(buffer, 1024, fp));
+      printf("%s", buffer);
     }
   }
-
   fclose(fp);
 
   return 0;

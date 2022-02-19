@@ -1,15 +1,36 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+/*
+ * Duplicates the basic functionality of the command 'grep'.
+ * Searches a file for a specific word or phrase
+ * @Author Bradley Henderson
+*/
 
 int main(int argc, char** argv) 
 {
-  if(argc < 3)
+  if(argc < 2)
   {
-    printf("To few arguments\n");
-    return 0;
+    printf("wgrep: searchterm [file ...]\n");
+    return 1;
   }
 
   char *search_term = argv[1];
+
+  //Lines in after the fact
+  if(argc == 2)
+  {
+    char *buffer;
+    size_t buffer_size = 32;
+    buffer = (char *)malloc(buffer_size * sizeof(char));
+    while(getline(&buffer, &buffer_size, stdin) != -1)
+    {
+      if(strstr(buffer, search_term))
+        printf("%s", buffer);
+    }
+    return 0;
+  }
 
   FILE *fp;
   for(int i = 2; i < argc; i++)
@@ -20,21 +41,18 @@ int main(int argc, char** argv)
       printf("wgrep: cannot open file\n");
       return 1;
     }
-
+    
     while(!feof(fp))
     {
-      size_t buffer_size = 1024;
-      char buffer[1024] = { };
-      char *buffer_ptr = buffer;
-      getline(&buffer_ptr, &buffer_size, fp);
-      char *contains;
-      contains = strstr(buffer, search_term);
-      if(contains)
-        printf("%s", buffer);
+      char *buffer;
+      size_t buffer_size = 32;
+      buffer = (char *)malloc(buffer_size * sizeof(char));
+      if(getline(&buffer, &buffer_size, fp) != -1)
+        if(strstr(buffer, search_term))
+          printf("%s", buffer);
     }
+    fclose(fp);
   }
-
-  fclose(fp);
 
   return 0;
 }
